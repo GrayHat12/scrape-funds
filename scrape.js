@@ -53,6 +53,7 @@ function main() {
         console.log("Scraping ", fullname);
         let paras = Array.from(doc.getElementsByTagName("p"));
         let index = paras.findIndex(x => x.textContent === fullnameParent.textContent);
+        console.log("index",index);
         paras = paras.slice(index);
         console.log(paras[0].textContent, paras.length);
         let pisElStart = -1;
@@ -62,13 +63,15 @@ function main() {
             if (pisElStart < 0) {
                 let content = para.textContent;
                 if (content.trim().toLowerCase().startsWith("principal investment strategy:")) {
+                    console.log("started",para);
                     pisElStart = i;
                 }
                 continue;
             };
             if (pisElEnd < 0) {
                 if (para.getElementsByTagName("b").length > 0) {
-                    pisElStart = i + 1;
+                    pisElEnd = i;
+                    console.log("ended",para);
                 }
                 continue;
             };
